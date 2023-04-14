@@ -7,7 +7,10 @@ try
 {
     var result = await httpRequester.RequestSticksWithLimit("1m", "60");
     var levels = await holdLevelFinder.GetLevels(result);
-    Console.WriteLine("Ry");
+    foreach (var level in levels)
+    {
+        Console.WriteLine(level.Level);
+    }
 } 
 catch (Exception ex)
 {
