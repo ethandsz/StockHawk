@@ -9,4 +9,7 @@ public class ByBitResponse
     
     [JsonPropertyName("result")]
     public Result Result { get; set; }
+    
+    [JsonPropertyName("time")]
+    public Int64 Time { get; set; }
 }
