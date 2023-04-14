@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
+using StockHawk.Api.Models;
+using static StockHawk.Api.Constants;
 
 namespace StockHawk.Api;
 
@@ -25,12 +27,14 @@ public sealed class HttpRequester : IHttpRequester
 
     private readonly JsonSerializerOptions _jsonSerializerOptions = new() {NumberHandling = JsonNumberHandling.AllowReadingFromString};
     
-    public async Task<T> GetFromJsonAsync<T>(Uri endpoint)
+    private async Task<T> GetFromJsonAsync<T>(Uri endpoint)
     {
         try
         {
+            Console.WriteLine($"Sending request: {endpoint}");
             var response = await _httpClient.GetAsync(endpoint);
             response.EnsureSuccessStatusCode();
+            Console.WriteLine("Success!");
             var json = await response.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<T>(json, _jsonSerializerOptions)!;
         }
@@ -44,4 +48,22 @@ public sealed class HttpRequester : IHttpRequester
         }
     }
 
+    public async Task<ByBitResponse> RequestSticksWithLimit(string timeInterval, string stickLimit)
+    {
+        var endpoint = new Uri(string.Format(Constants.RequestSticksWithLimit, BaseUrl, timeInterval, stickLimit));
+        return await GetFromJsonAsync<ByBitResponse>(endpoint);
+    }
+
+    public async Task<ByBitResponse> RequestSticksWithTimeLimit(string timeInterval, string startTime, string? endTime)
+    {
+        var endpoint = new Uri(String.Format(Constants.RequestSticksWithTimeLimit, BaseUrl, timeInterval, startTime, endTime));
+        return await GetFromJsonAsync<ByBitResponse>(endpoint);
+    }
+
+    public async Task<Int64> GetCurrentTime()
+    {
+        var endpoint = new Uri(String.Format(RequestTicker, BaseUrl));
+        var result = await GetFromJsonAsync<ByBitResponse>(endpoint);
+        return result.Time;
+    }
 }
