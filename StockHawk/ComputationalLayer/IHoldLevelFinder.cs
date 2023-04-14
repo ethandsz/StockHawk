@@ -1,8 +1,9 @@
 ﻿using StockHawk.Api.Models;
+using StockHawk.ComputationalLayer.Models;
 
 namespace StockHawk.ComputationalLayer;
 
 public interface IHoldLevelFinder
 { 
-    List<CandleStick> IdentifyWickRanges(List<CandleStick> wicks);
+    Task<List<HoldLevel>> GetLevels(ByBitResponse response);
 }
