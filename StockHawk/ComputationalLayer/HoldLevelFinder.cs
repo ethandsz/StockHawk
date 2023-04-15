@@ -29,8 +29,8 @@ public class HoldLevelFinder : IHoldLevelFinder
     {
         var possibleLevels = IdentifyWickRanges(response.Result.Wicks);
         var untestedHoldLevels = await GetUntestedLevels(possibleLevels);
-        
-        throw new NotImplementedException();
+
+        return untestedHoldLevels;
     }
 
     /// <summary>
@@ -81,17 +81,28 @@ public class HoldLevelFinder : IHoldLevelFinder
         var currentTime = await _httpRequester.GetCurrentTime();
         foreach (var holdLevel in holdLevels)
         {
-            var candleStickRange =
-               await _httpRequester.RequestSticksWithTimeLimit("1m", holdLevel.TimeStamp.ToString(),  currentTime.ToString());
-            var possibleSticks = candleStickRange.Result.Wicks.Where(w => w.IsBullish != holdLevel.IsInverse);
+            var startTime = holdLevel.TimeStamp;
+            var sticks = new List<CandleStick>();
+            while (startTime < currentTime)
+            {
+                var requestedSticks =
+                    await _httpRequester.RequestSticksWithTimeLimit("1m", startTime.ToString(), (startTime + 60000000).ToString());
+                startTime += 60000000;
+                // var possibleSticksInRange = sticks.Where(w => w.IsBullish != holdLevel.IsInverse);
+                // if (holdLevel.IsInverse)
+                // {
+                //     var firstNonBullishClosedBody = possibleSticksInRange.Where(p => p.Open < holdLevel.Level).FirstOrDefault();
+                // }
+                sticks.AddRange(requestedSticks.Result.Wicks);
+            }
+            var possibleSticks = sticks.Where(w => w.IsBullish != holdLevel.IsInverse);
             if (holdLevel.IsInverse)
             {
                 var firstNonBullishClosedBody = possibleSticks.Where(p => p.Open < holdLevel.Level).FirstOrDefault();
                 if (firstNonBullishClosedBody is not null)
                 {
-                    candleStickRange = await _httpRequester.RequestSticksWithTimeLimit("1m",
-                        firstNonBullishClosedBody.TimeStamp.ToString(), currentTime.ToString());
-                    possibleSticks = candleStickRange.Result.Wicks.Where(w => w.IsBullish == holdLevel.IsInverse);
+                    possibleSticks = sticks.Where(s => s.TimeStamp > firstNonBullishClosedBody.TimeStamp);
+                    possibleSticks = possibleSticks.Where(w => w.IsBullish == holdLevel.IsInverse);
                     if (!possibleSticks.Any(p => p.High > holdLevel.Level * .9999))
                     {
                         unTestedLevels.Add(holdLevel);
@@ -103,9 +114,8 @@ public class HoldLevelFinder : IHoldLevelFinder
             var firstBullishClosedBody = possibleSticks.Where(p => p.Open > holdLevel.Level).FirstOrDefault();
             if (firstBullishClosedBody is not null)
             {
-                candleStickRange = await _httpRequester.RequestSticksWithTimeLimit("1m",
-                    firstBullishClosedBody.TimeStamp.ToString(), currentTime.ToString());
-                possibleSticks = candleStickRange.Result.Wicks.Where(w => w.IsBullish == holdLevel.IsInverse);
+                possibleSticks = sticks.Where(s => s.TimeStamp > firstBullishClosedBody.TimeStamp);
+                possibleSticks = possibleSticks.Where(w => w.IsBullish == holdLevel.IsInverse);
                 if (!possibleSticks.Any(p => p.Low < holdLevel.Level * 1.0001))
                 {
                     unTestedLevels.Add(holdLevel);
