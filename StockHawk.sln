@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockHawk", "StockHawk\StockHawk.csproj", "{7C21BB26-D89A-4246-BF10-D496A20896CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockHawk.Tests", "StockHawk.Tests\StockHawk.Tests.csproj", "{9410757D-2164-4E53-9BCF-E23A2412B4F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{7C21BB26-D89A-4246-BF10-D496A20896CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C21BB26-D89A-4246-BF10-D496A20896CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C21BB26-D89A-4246-BF10-D496A20896CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9410757D-2164-4E53-9BCF-E23A2412B4F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9410757D-2164-4E53-9BCF-E23A2412B4F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9410757D-2164-4E53-9BCF-E23A2412B4F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9410757D-2164-4E53-9BCF-E23A2412B4F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

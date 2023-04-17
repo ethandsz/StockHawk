@@ -5,5 +5,5 @@ namespace StockHawk.ComputationalLayer;
 
 public interface IHoldLevelFinder
 { 
-    Task<List<HoldLevel>> GetLevels(ByBitResponse response);
+    Task<List<HoldLevel>> GetLevels(ByBitResponse response, string timeInterval);
 }

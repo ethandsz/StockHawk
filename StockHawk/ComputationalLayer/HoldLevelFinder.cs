@@ -25,9 +25,9 @@ public class HoldLevelFinder : IHoldLevelFinder
         return _instance;
     }
 
-    public async Task<List<HoldLevel>> GetLevels(ByBitResponse response)
+    public async Task<List<HoldLevel>> GetLevels(ByBitResponse response, string timeInterval)
     {
-        var possibleLevels = IdentifyWickRanges(response.Result.Wicks);
+        var possibleLevels = IdentifyHighLevelHoldLevels(response.Result.Wicks);
         var untestedHoldLevels = await GetUntestedLevels(possibleLevels);
 
         return untestedHoldLevels;
@@ -38,7 +38,7 @@ public class HoldLevelFinder : IHoldLevelFinder
     /// </summary>
     /// <param name="wicks">The list of candlestick wicks.</param>
     /// <returns>A list of candlestick wicks representing the range of each identified pattern.</returns>
-    private List<HoldLevel> IdentifyWickRanges(List<CandleStick> wicks)
+    private List<HoldLevel> IdentifyHighLevelHoldLevels(List<CandleStick> wicks)
     {
         List<CandleStick> possibleHoldLevelSticks = new List<CandleStick>();
         bool isInsideRange = false;
@@ -79,6 +79,7 @@ public class HoldLevelFinder : IHoldLevelFinder
     {
         var unTestedLevels = new List<HoldLevel>();
         var currentTime = await _httpRequester.GetCurrentTime();
+        var numOfLevels = holdLevels.Count;
         foreach (var holdLevel in holdLevels)
         {
             var startTime = holdLevel.TimeStamp;
@@ -121,6 +122,9 @@ public class HoldLevelFinder : IHoldLevelFinder
                     unTestedLevels.Add(holdLevel);
                 }
             }
+
+            numOfLevels--;
+            Console.WriteLine($"Progress: {(double)(holdLevels.Count - numOfLevels) / holdLevels.Count}");
         }
 
         return unTestedLevels;
