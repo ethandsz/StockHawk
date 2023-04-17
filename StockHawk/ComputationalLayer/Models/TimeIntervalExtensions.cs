@@ -1,8 +1,8 @@
 ﻿namespace StockHawk.ComputationalLayer.Models;
 
-public class TimeIntervalExtensions
+public static class TimeIntervalExtensions
 {
-    public static Int64 ConvertToMillis(string timeInterval)
+    public static Int64 ConvertToMillis(this string timeInterval)
     {
         ArgumentNullException.ThrowIfNull(timeInterval);
         if (timeInterval.EndsWith('h'))

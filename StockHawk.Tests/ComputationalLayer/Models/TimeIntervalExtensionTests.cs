@@ -17,16 +17,16 @@ public class TimeIntervalExtensionTests
       public void ConvertToMillis_GivenTimeInterval_ConvertToMilliseconds(string timeInterval, Int64 expected)
       {
             //Arrange, Act
-            var actual = ConvertToMillis(timeInterval);
+            var actual = timeInterval.ConvertToMillis();
             
             //Assert
             Assert.AreEqual(actual, expected);
       }
 
-      [Test]
-      public void ConvertToMillis_GivenNull_ThrowNullException()
+      [TestCase(null)]
+      public void ConvertToMillis_GivenNull_ThrowNullException(string data)
       {
             //Arrange, Act, Assert
-            Assert.Throws<ArgumentNullException>(() => ConvertToMillis(null));
+            Assert.Throws<ArgumentNullException>(() => data.ConvertToMillis());
       }
 }
