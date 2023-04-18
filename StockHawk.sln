@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockHawk", "StockHawk\Stoc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StockHawk.Tests", "StockHawk.Tests\StockHawk.Tests.csproj", "{9410757D-2164-4E53-9BCF-E23A2412B4F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bybit.Net", "ByBit.Net\Bybit.Net.csproj", "{6B4231C8-AB24-4865-8B49-5E0BF226E303}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{9410757D-2164-4E53-9BCF-E23A2412B4F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9410757D-2164-4E53-9BCF-E23A2412B4F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9410757D-2164-4E53-9BCF-E23A2412B4F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B4231C8-AB24-4865-8B49-5E0BF226E303}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B4231C8-AB24-4865-8B49-5E0BF226E303}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B4231C8-AB24-4865-8B49-5E0BF226E303}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B4231C8-AB24-4865-8B49-5E0BF226E303}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
