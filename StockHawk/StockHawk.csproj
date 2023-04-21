@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ByBit.Net\Bybit.Net.csproj" />
+      <PackageReference Include="Bybit.Net" Version="2.0.0" />
     </ItemGroup>
 
 </Project>
