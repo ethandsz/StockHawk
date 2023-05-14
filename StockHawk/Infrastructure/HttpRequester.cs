@@ -1,7 +1,5 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using Bybit.Net.Objects.Models.Spot;
-using CryptoExchange.Net.Objects;
 using StockHawk.Api.Models;
 using static StockHawk.Api.Constants;
 

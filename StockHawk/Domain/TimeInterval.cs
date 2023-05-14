@@ -11,5 +11,4 @@ public static class TimeInterval
         FiveMinute = "5m",
         ThreeMinute = "3m",
         OneMinute = "1m";
-
 }

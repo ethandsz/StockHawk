@@ -8,7 +8,7 @@ public class ByBitResponse
     public string StatusMessage { get; set; }
     
     [JsonPropertyName("result")]
-    public Result Result { get; set; }
+    public ByBitResult ByBitResult { get; set; }
     
     [JsonPropertyName("time")]
     public Int64 Time { get; set; }

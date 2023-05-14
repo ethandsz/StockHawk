@@ -27,7 +27,7 @@ public class HoldLevelFinder : IHoldLevelFinder
 
     public async Task<List<HoldLevel>> GetLevels(ByBitResponse response, string timeInterval)
     {
-        var possibleLevels = IdentifyHighLevelHoldLevels(response.Result.Wicks);
+        var possibleLevels = IdentifyHighLevelHoldLevels(response.ByBitResult.Wicks);
         var lowerLevels = await ConvertHighLevelHoldLevels(possibleLevels, timeInterval);
        // var untestedHoldLevels = await GetUntestedLevels(possibleLevels);
 
@@ -92,7 +92,7 @@ public class HoldLevelFinder : IHoldLevelFinder
                     await _httpRequester.RequestSticksWithTimeLimit(timeInterval, startTime.ToString(),
                         currentTime.ToString());
                 startTime += milliSeconds * 1000;
-                sticks.AddRange(requestedSticks.Result.Wicks);
+                sticks.AddRange(requestedSticks.ByBitResult.Wicks);
             }
             
             var sticksToTestForInverseLevel = sticks.Where(s => s.High > holdLevel.Level && s.Low < holdLevel.Level && s.TimeStamp > holdLevel.TimeStamp).ToList();
@@ -174,7 +174,7 @@ public class HoldLevelFinder : IHoldLevelFinder
         {
             var response = await _httpRequester.RequestSticksWithTimeLimit("1m", candleStick.TimeStamp.ToString(),
                 (candleStick.TimeStamp + timeInterval.ConvertToMillis()).ToString());
-            var sticks = response.Result.Wicks;
+            var sticks = response.ByBitResult.Wicks;
             var possibleSticks = sticks.Where(w => w.IsBullish != holdLevel.IsInverse);
             if (holdLevel.IsInverse)
             {

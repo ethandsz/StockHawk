@@ -14,10 +14,10 @@ var timeInterval = TimeInterval.FifteenMinute;
 var client = new BybitClient(new BybitClientOptions()
 {
     LogLevel = LogLevel.Debug,
-    ApiCredentials = new ApiCredentials("API-KEY", "SECRET"),
+    ApiCredentials = new ApiCredentials("key", "secret"),
     SpotApiOptions = new RestApiClientOptions()
     {
-        ApiCredentials = new ApiCredentials("API-KEY", "SECRET")              ,
+        ApiCredentials = new ApiCredentials("key", "secret")              ,
         BaseAddress = BybitApiAddresses.Default.SpotRestClientAddress
     }
 });

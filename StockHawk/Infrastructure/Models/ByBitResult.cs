@@ -2,7 +2,7 @@
 
 namespace StockHawk.Api.Models;
 
-public class Result
+public class ByBitResult
 {
     [JsonPropertyName("list")]
     public List<CandleStick>? Wicks { get; set; }
